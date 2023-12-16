@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='pharmacy_pharmacy_action_form' model='ir.actions.act_window'>
+        <field name="name">Pharmacy Pharmacy</field>
+        <field name="res_model">pharmacy.pharmacy</field>
+        <field name="view_mode">tree,form,graph,calendar,search</field>
+    </record>
+
+    <menuitem name="Pharmacy" id="pharmacy_main_menu" />
+    <menuitem name="Pharmacies" id="Pharmacy_pharmacy_menu" parent="pharmacy_main_menu" action="pharmacy_pharmacy_action_form"/>
+
+    <record id="pharmacy_pharmacy_view_form" model="ir.ui.view">
+        <field name="name">Pharmacy Pharmacy Form</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <form>
+                <header class="o_form_header">
+                    <button name="make_non_permanent" string="Make Non Permanent" type="object"/>
+                    <button name="make_permanent" string="Make Permanent" type="object"/>
+                    <field name="permanenceState" widget="statusbar" class="o_statusbar_status"/>
+                </header>
+                <group class="o_group">
+                    <group>
+                        <field name="name"/>
+                        <field name="short_name"/>
+                        <field name="phone"/>
+                        <field name="address"/>
+                        <field name="city"/>
+                        <field name="country"/>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="logo" widget="image" class="oe_left oe_avatar"/>
+                        <field name="dateStartPermanence"/>
+                        <field name="dateEndPermanence"/>
+                        <field name="isStockEnough"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="pharmacy_pharmacy_action_list" model="ir.ui.view">
+        <field name="name">Pharmacy Pharmacy list</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="short_name"/>
+                <field name="address"/>
+                <field name="city"/>
+                <field name="country"/>
+                <field name="phone"/>
+                <field name="dateStartPermanence"/>
+                <field name="dateEndPermanence"/>
+                <field name="isStockEnough"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pharmacy_pharmacy_action_graph" model="ir.ui.view">
+        <field name="name">Pharmacy Pharmacy Graph</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <graph string="Pharmacies">
+                <field name="name" type="row"/>
+                <field name="dateStartPermanence" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="pharmacy_pharmacy_view_calendar" model="ir.ui.view">
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <calendar date_start="dateStartPermanence" date_stop="dateEndPermanence">
+                <field name="name"/>
+                <field name="permanenceState"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="pharmacy_pharmacy_view_search" model="ir.ui.view">
+        <field name="name">Pharmacy Pharmacy Search</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="city"/>
+                <field name="country"/>
+                <filter string="Permanence" name="permanenceState" domain="[('permanenceState', '=', 'permanence')]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
