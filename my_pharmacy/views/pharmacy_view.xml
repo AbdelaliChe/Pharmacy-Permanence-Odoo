@@ -24,16 +24,16 @@
                         <field name="name"/>
                         <field name="short_name"/>
                         <field name="phone"/>
-                        <field name="address"/>
-                        <field name="city"/>
                         <field name="country"/>
-                        <field name="description"/>
+                        <field name="city" on_change="1"/>
+                        <field name="neighborhood"/>
+                        <field name="medicines" widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="logo" widget="image" class="oe_left oe_avatar"/>
                         <field name="dateStartPermanence"/>
                         <field name="dateEndPermanence"/>
-                        <field name="isStockEnough"/>
+                        <field name="description"/>
                     </group>
                 </group>
             </form>
@@ -47,14 +47,14 @@
             <tree>
                 <field name="name"/>
                 <field name="short_name"/>
-                <field name="address"/>
+                <field name="neighborhood"/>
                 <field name="city"/>
                 <field name="country"/>
                 <field name="phone"/>
                 <field name="dateStartPermanence"/>
                 <field name="dateEndPermanence"/>
-                <field name="isStockEnough"/>
                 <field name="description"/>
+                <field name="medicines"/>
             </tree>
         </field>
     </record>

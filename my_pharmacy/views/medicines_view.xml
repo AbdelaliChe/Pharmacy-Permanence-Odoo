@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='pharmacy_medicine_action_form' model='ir.actions.act_window'>
+        <field name="name">Pharmacy Medicine</field>
+        <field name="res_model">pharmacy.medicine</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Pharmacy" id="pharmacy_main_menu" />
+    <menuitem name="Medicines" id="Pharmacy_medicine_menu" parent="pharmacy_main_menu" action="pharmacy_medicine_action_form"/>
+
+    <record id="pharmacy_medicine_view_form" model="ir.ui.view">
+        <field name="name">Pharmacy Medicine Form</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <form>
+                <group class="o_group">
+                    <group>
+                        <field name="name"/>
+                        <field name="indication"/>
+                        <field name="description"/>
+                        <field name="distributer"/>
+                        <field name="pharmacies" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="logo" widget="image" class="oe_left oe_avatar"/>
+                        <field name="composition"/>
+                        <field name="public_price"/>
+                        <field name="isInStock"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="pharmacy_medicine_action_list" model="ir.ui.view">
+        <field name="name">Pharmacy Medicine List</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="indication"/>
+                <field name="description"/>
+                <field name="distributer"/>
+                <field name="composition"/>
+                <field name="public_price"/>
+                <field name="pharmacies"/>
+                <field name="isInStock"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
