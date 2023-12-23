@@ -11,8 +11,6 @@
         'views/pharmacy_detail_template.xml',
         'views/pharmacy_home.xml',
         'security/ir.model.access.csv',
-        'views/city_view.xml',
-        'views/neighborhood_view.xml',
         'views/medicines_view.xml',
     ],
     'installable': True,

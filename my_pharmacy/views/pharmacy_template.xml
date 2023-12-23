@@ -4,10 +4,30 @@
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+
+            <script>
+                function getUserLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            // Construct URL with latitude and longitude parameters
+                            var url = "/pharmacy?latitude=" + position.coords.latitude + "&amp;longitude=" + position.coords.longitude;
+
+                            // Redirect the user to the new URL
+                            window.location.href = url;
+                        }, function(error) {
+                            alert("Error getting user location: " + error.message);
+                        });
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                }
+            </script>
+
+
             <div class="bg-success p-5">
                 <div class="card" style="min-height: 100vh;">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <a class="navbar-brand fw-bold text-success" href="#">
+                        <a class="navbar-brand fw-bold text-success" href="/pharmacy">
                             <i class="fa fa-notes-medical me-2"></i>PermaPharma</a>
                         <a class="btn btn-outline-success" href="http://localhost:8069/web/login">
                             <i class="fa-solid fa-download me-2"></i>Permanence File
@@ -20,15 +40,20 @@
                             <div class="mx-auto mb-3" style="max-width: 700px;">
                                 <form class="form-inline" method="get" action="/pharmacy">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search by pharmacy name, city..." name="search" aria-label="Search" t-att-value="search"/>
+                                        <input type="text" class="form-control" placeholder="Search by pharmacy name..." name="search" aria-label="Search" t-att-value="search"/>
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-success" onclick="this.form.action='/pharmacy?search=' + this.form.elements['search'].value + '&amp;search_in=Name&amp;city_filter=' + this.form.elements['city_filter'].value + '&amp;neighborhood_filter=' + this.form.elements['neighborhood_filter'].value + '&amp;permanence_filter=' + this.form.elements['permanence_filter'].value;">
+                                            <button type="submit" class="btn btn-success" onclick="this.form.action='/pharmacy?search=' + this.form.elements['search'].value + '&amp;permanence_filter=' + this.form.elements['permanence_filter'].value;">
                                                 <i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
                                         </div>
                                     </div>
-                                    <div class="mt-3">
+                                    <div class="mt-3 d-flex justify-content-center align-items-center">
                                         <div class="form-group mx-2 d-inline-block">
-                                            <select class="form-select" name="city_filter" t-attf-onchange="this.form.action='/pharmacy?city_filter=' + this.value; this.form.submit();">
+                                            <a class="btn btn-outline-dark" onclick="getUserLocation()">
+                                                Near me <i class="fa-solid fa-street-view"></i>
+                                            </a>
+                                        </div>
+                                        <div class="form-group mx-2 d-inline-block">
+                                            <select class="form-select border-dark" name="city_filter" t-attf-onchange="this.form.action='/pharmacy?city_filter=' + this.value; this.form.submit();">
                                                 <option value="">All Cities</option>
                                                 <t t-foreach="cities" t-as="city">
                                                     <option t-att-value="city" t-if="city_filter == city" selected="selected">
@@ -41,22 +66,9 @@
                                             </select>
                                         </div>
                                         <div class="form-group mx-2 d-inline-block">
-                                            <select class="form-select" name="neighborhood_filter" t-attf-onchange="this.form.action='/pharmacy?neighborhood_filter=' + this.value; this.form.submit();">
-                                                <option value="">All Neighborhoods</option>
-                                                <t t-foreach="neighborhoods" t-as="neighborhood">
-                                                    <option t-att-value="neighborhood" t-if="neighborhood_filter == neighborhood" selected="selected">
-                                                        <t t-esc="neighborhood"/>
-                                                    </option>
-                                                    <option t-att-value="neighborhood" t-else="">
-                                                        <t t-esc="neighborhood"/>
-                                                    </option>
-                                                </t>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mx-2 d-inline-block">
-                                            <select class="form-select" name="permanence_filter" t-attf-onchange="this.form.action='/pharmacy?permanence_filter=' + this.value; this.form.submit();">
+                                            <select class="form-select border-dark" name="permanence_filter" t-attf-onchange="this.form.action='/pharmacy?permanence_filter=' + this.value; this.form.submit();">
                                                 <option value="">All Pharmacies</option>
-                                                <t t-foreach="['permanence', 'noPermanence']" t-as="permanence_option">
+                                                <t t-foreach="['Permanence', 'NonPermanence']" t-as="permanence_option">
                                                     <option t-att-value="permanence_option" t-if="permanence_filter == permanence_option" selected="selected">
                                                         <t t-esc="permanence_option"/>
                                                     </option>
@@ -82,54 +94,53 @@
                             </div>
                         </t>
                         <t t-else="">
-                            <div class="card-deck mt-2 row row-cols-1 row-cols-md-4 g-4">
+                            <div class="row row-cols-1 row-cols-md-4 g-4">
                                 <t t-foreach="pharmacies" t-as="pharmacy">
                                     <div class="col">
-                                        <a t-attf-href="/pharmacy/detail/#{pharmacy.id}" class="text-reset text-decoration-none card mb-3 h-100 d-flex flex-fill position-relative">
-                                            <span class="badge rounded-pill bg-success position-absolute top-0 start-0 m-2" t-if="pharmacy.permanenceState == 'permanence'">
-                                                <i class="fa-solid fa-clock-rotate-left me-2"></i>in Permanence</span>
-                                            <img t-att-src="'data:image/png;base64, ' + pharmacy.logo.decode('utf-8')" class="card-img-top img-fluid" alt="Pharmacy Logo"></img>
-                                            <div class="card-body d-flex flex-column text-center">
-                                                <h3 class="card-title">
+                                        <div class="card mb-3 h-100 d-flex flex-fill">
+                                            <a t-attf-href="/pharmacy/detail/#{pharmacy.id}" class="text-reset text-decoration-none h-100 ">
+                                                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
                                                     <t t-esc="pharmacy.name" />
-                                                </h3>
-                                                <p class="card-text">
-                                                    <p t-raw="pharmacy.description" />
-                                                </p>
-                                            </div>
-                                            <ul class="list-group list-group-flush fw-bold">
-                                                <li class="list-group-item">
-                                                    <i class="fa-solid fa-location-crosshairs me-2"></i>
-                                                    Neighborhood : <t t-esc="pharmacy.neighborhood.name" />
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <i class="fa-solid fa-city me-2"></i>
-                                                    City : <t t-esc="pharmacy.city.name" />
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <i class="fa-solid fa-flag me-2"></i>
-                                                    Country : <t t-esc="pharmacy.country.name" />
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <i class="fa-solid fa-phone me-2"></i>
-                                                    Phone : <t t-esc="pharmacy.phone" />
-                                                </li>
-                                            </ul>
+                                                    <span class="badge bg-success" t-if="pharmacy.permanenceState == 'Permanence'">
+                                                        <i class="fa-solid fa-clock-rotate-left me-2"></i>in Permanence</span>
+                                                </div>
+                                                <div class = "card-body d-flex flex-column m-0">
+                                                    <div class="image-container aspect-ratio aspect-ratio-1x1 bg-success d-flex justify-content-center align-items-center" style="height: 200px; overflow: hidden;">
+                                                        <t t-if="pharmacy.logo">
+                                                            <img t-att-src="'data:image/png;base64,' + pharmacy.logo.decode('utf-8')" class="card-img-top img-fluid aspect-ratio-item object-fit-fill" alt="Pharmacy Logo"/>
+                                                        </t>
+                                                        <t t-if="not pharmacy.logo">
+                                                            <div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%;">
+                                                                <i class="fa fa-notes-medical text-white" style="font-size: 4rem;"></i>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush fw-bold">
+                                                        <li class="list-group-item">
+                                                            <i class="fa-solid fa-location-crosshairs me-2"></i>Address : <t t-esc="pharmacy.address" />
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <i class="fa-solid fa-city me-2"></i>City : <t t-esc="pharmacy.city" />
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <i class="fa-solid fa-flag me-2"></i>Country : <t t-esc="pharmacy.country.name" />
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </a>
                                             <div class="card-footer text-center">
-                                                <t t-if="pharmacy.permanenceState == 'permanence'">
-                                                    <small class="text-muted">
-                                                        <t t-esc="pharmacy.dateStartPermanence"/>
-                                                    </small>
-                                                </t>
-                                                <t t-else="">
-                                                    <small class="text-muted">
-                                                        pharmacie not in permanence today
-                                                    </small>
-                                                </t>
+                                                <a class="text-decoration-none text-success" t-att-href="pharmacy.localisation_link" target="_blank">
+                                                    <i class="fa-solid fa-map-location-dot me-2"></i>Appear on Google Map
+                                                </a>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
                                 </t>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a t-if="not show_more" class="text-decoration-none btn btn-light" t-att-href="'/pharmacy/'+'?show_more=true'">
+                                    <i class="fa-solid fa-arrow-down me-2"></i>Show All
+                                </a>
                             </div>
                         </t>
                     </div>

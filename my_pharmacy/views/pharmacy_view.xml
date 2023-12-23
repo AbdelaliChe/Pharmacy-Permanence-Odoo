@@ -23,17 +23,18 @@
                     <group>
                         <field name="name"/>
                         <field name="short_name"/>
-                        <field name="phone"/>
+                        <field name="address"/>
                         <field name="country"/>
                         <field name="city" on_change="1"/>
-                        <field name="neighborhood"/>
                         <field name="medicines" widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="logo" widget="image" class="oe_left oe_avatar"/>
                         <field name="dateStartPermanence"/>
                         <field name="dateEndPermanence"/>
-                        <field name="description"/>
+                        <field name="latitude"/>
+                        <field name="longitude"/>
+                        <field name="localisation_link"/>
                     </group>
                 </group>
             </form>
@@ -47,14 +48,15 @@
             <tree>
                 <field name="name"/>
                 <field name="short_name"/>
-                <field name="neighborhood"/>
                 <field name="city"/>
                 <field name="country"/>
-                <field name="phone"/>
+                <field name="address"/>
                 <field name="dateStartPermanence"/>
                 <field name="dateEndPermanence"/>
-                <field name="description"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
                 <field name="medicines"/>
+                <field name="localisation_link" widget="url"/>
             </tree>
         </field>
     </record>

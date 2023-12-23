@@ -7,7 +7,7 @@
             <div class="bg-success p-5">
                 <div class="card" style="min-height: 100vh;">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <a class="navbar-brand fw-bold text-success" href="#">
+                        <a class="navbar-brand fw-bold text-success" href="/pharmacy">
                             <i class="fa fa-notes-medical me-2"></i>PermaPharma</a>
                         <a class="btn btn-outline-success" href="http://localhost:8069/web/login">
                             <i class="fa-solid fa-download me-2"></i>Permanence File
@@ -16,41 +16,23 @@
                     <div class="card-body">
                         <div class="p-3 text-center">
                             <h1 class="card-title fw-bold display-4">
-                                <t t-esc="pharmacy.name"></t> Pharmacy</h1>
+                                Welcome to <t t-esc="pharmacy.name"></t>
+                            </h1>
                             <p class="card-text lead">Explore the diverse range of medicines available at <t t-esc="pharmacy.name"></t>and prioritize your health and well-being.</p>
                             <div class="mx-auto mb-3" style="max-width: 700px;">
-                                <form class="form-inline" method="get" t-attf-action="/pharmacy/detail/{{ pharmacy.id }}">
+                                <form class="form-inline" method="get" t-attf-action="/pharmacy/detail/{{ pharmacy.id }}?search={{ search_name }}">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search medicament..." name="search" aria-label="Search" t-att-value="search"/>
+                                        <input type="text" class="form-control" placeholder="Search medicines..." name="search_name" aria-label="search_name" t-att-value="search_name"/>
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-success">
                                                 <i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
                                         </div>
                                     </div>
-                                    <div class="mt-3">
+                                    <div class="mt-2">
                                         <div class="form-group mx-2 d-inline-block">
-                                            <span class="badge bg-dark p-2">
-                                                <i class="fa-solid fa-location-crosshairs me-2"></i>
-                                                    Neighborhood : <t t-esc="pharmacy.neighborhood.name" />
-                                            </span>
-                                        </div>
-                                        <div class="form-group mx-2 d-inline-block">
-                                            <span class="badge bg-dark p-2">
-                                                <i class="fa-solid fa-city me-2"></i>
-                                                    City : <t t-esc="pharmacy.city.name" />
-                                            </span>
-                                        </div>
-                                        <div class="form-group mx-2 d-inline-block">
-                                            <span class="badge bg-dark p-2">
-                                                <i class="fa-solid fa-flag me-2"></i>
-                                                    Country : <t t-esc="pharmacy.country.name" />
-                                            </span>
-                                        </div>
-                                        <div class="form-group mx-2 d-inline-block">
-                                            <span class="badge bg-dark p-2">
-                                                <i class="fa-solid fa-phone me-2"></i>
-                                                    Phone : <t t-esc="pharmacy.phone" />
-                                            </span>
+                                            <a class="badge bg-dark text-truncate text-decoration-none p-2" t-att-href="pharmacy.localisation_link" target="_blank">
+                                                <i class="fa-solid fa-location-crosshairs me-2"></i>Address : <t t-esc="pharmacy.address" />
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -67,29 +49,28 @@
                             </div>
                         </t>
                         <t t-else="">
-                            <div class="card-deck mt-2 row row-cols-1 row-cols-md-4 g-4">
+                            <div class="card-deck row row-cols-1 row-cols-md-4 g-4">
                                 <t t-foreach="medicines" t-as="medicine">
                                     <div class="col">
-                                        <div class="card mb-3 h-100 d-flex flex-fill position-relative">
-                                            <span class="badge rounded-pill bg-success position-absolute top-0 start-0 m-2" t-if="medicine.isInStock">
-                                                <i class="fa-solid fa-cubes me-2"></i>in Stock</span>
-                                            <img t-att-src="'data:image/png;base64, ' + medicine.logo.decode('utf-8')" class="card-img-top img-fluid" alt="medicine Logo"></img>
-                                            <div class="card-body d-flex flex-column text-center">
-                                                <h3 class="card-title">
-                                                    <t t-esc="medicine.name" />
-                                                </h3>
-                                                <p class="card-text">
-                                                    <p t-raw="medicine.indication" />
-                                                </p>
+                                        <div class="card mb-3 h-100 d-flex flex-fill">
+                                            <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                                                <t t-esc="medicine.name" />
+                                                <span class="badge bg-success">
+                                                    <i class="fa-solid fa-layer-group me-2"></i>in Stock</span>
                                             </div>
-                                            <ul class="list-group list-group-flush fw-bold">
+                                            <ul class="list-group list-group-flush fw-bold h-100">
                                                 <li class="list-group-item">
                                                     <i class="fa-solid fa-file-medical me-2"></i>
-                                                    Description : <t t-esc="medicine.description" />
+                                                    Desc : <t t-esc="medicine.presentation" />
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fa-solid fa-file-medical me-2"></i>
+                                                    Forme : <t t-esc="medicine.forme" />
                                                 </li>
                                                 <li class="list-group-item">
                                                     <i class="fa-solid fa-building-circle-arrow-right me-2"></i>
-                                                    Distributer : <t t-esc="medicine.distributer" />
+                                                    Dosage : <t t-esc="medicine.dosage"></t>
+                                                    <t t-esc="medicine.unit_dosage"></t>
                                                 </li>
                                                 <li class="list-group-item">
                                                     <i class="fa-solid fa-flask-vial me-2"></i>
@@ -97,16 +78,21 @@
                                                 </li>
                                                 <li class="list-group-item">
                                                     <i class="fa-solid fa-money-bills me-2"></i>
-                                                    Public Price : <t t-esc="medicine.public_price"></t> DH
+                                                    Price : <t t-esc="medicine.price"></t> DH
                                                 </li>
                                             </ul>
                                             <div class="card-footer text-center">
-                                                <a type="submit" class="text-decoration-none btn btn-success btn-sm" href="this.form.action='/pharmacy">
+                                                <a type="submit" class="text-decoration-none text-success" href="this.form.action='/pharmacy">
                                                     <i class="fa-solid fa-bookmark me-2"></i>Book this Medicine</a>
                                             </div>
                                         </div>
                                     </div>
                                 </t>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a t-if="not show_more" class="text-decoration-none btn btn-light" t-att-href="'/pharmacy/detail/' + str(pharmacy.id) + '?show_more=true'">
+                                    <i class="fa-solid fa-arrow-down me-2"></i>Show All
+                                </a>
                             </div>
                         </t>
                     </div>

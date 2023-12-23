@@ -1,59 +1,96 @@
 from odoo import http
 from odoo.http import request
+from math import radians, sin, cos, sqrt, atan2
 
 class PharmacyController(http.Controller):
 
     @http.route('/pharmacy', auth="public", website=True)
-    def pharmacy_page(self, search="", search_in="Name", city_filter="", neighborhood_filter="",permanence_filter=""):
-        search_list = {
-            'Name': {'label': 'Pharmacy Name', 'input': 'name', 'domain': [('name', 'ilike', search)]},
-            'City': {'label': 'City', 'input': 'city', 'domain': [('city', 'ilike', search)]}
-        }
+    def pharmacy_page(self, search="", city_filter="", permanence_filter="", latitude=None, longitude=None, show_more=False):
+        
+        search_domain = [('name', 'ilike', '%' + search + '%')]
 
-        search_domain = search_list.get(search_in, {}).get('domain', [])
-
-        all_cities = request.env['pharmacy.city'].search([]).mapped('name')
+        all_cities = request.env['pharmacy.pharmacy'].sudo().search([('city', '!=', False)]).mapped('city')
         cities = set(all_cities)
-
-        all_neighborhoods = request.env['pharmacy.neighborhood'].search([]).mapped('name')
-        neighborhoods = set(all_neighborhoods)
 
         if city_filter:
             search_domain += [('city', '=', city_filter)]
-            neighborhoods = request.env['pharmacy.neighborhood'].search([('city_id.name', '=', city_filter)]).mapped('name')
+            show_more = True
 
-        if neighborhood_filter:
-            search_domain += [('neighborhood', '=', neighborhood_filter)]
+        if search:
+            show_more = True
 
         if permanence_filter:
             search_domain += [('permanenceState', '=', permanence_filter)]
+            show_more = True
 
         pharmacies = request.env['pharmacy.pharmacy'].search(search_domain)
+
+        if latitude and longitude:
+            search_domain += [('latitude', '=', float(latitude)), ('longitude', '=', float(longitude))]
+
+            user_location = (float(latitude), float(longitude))
+
+            # Create a list of tuples containing pharmacy records and distances
+            pharmacies_with_distances = [(pharmacy, self.haversine(user_location, (pharmacy.latitude, pharmacy.longitude))) for pharmacy in pharmacies]
+
+            # Sort pharmacies by distance
+            sorted_pharmacies = sorted(pharmacies_with_distances, key=lambda x: x[1])
+
+            # Extract sorted pharmacy records from the list
+            sorted_pharmacies = [record[0] for record in sorted_pharmacies]
+
+            pharmacies = sorted_pharmacies
+            show_more = True
+
+        if not show_more:
+            pharmacies = pharmacies[:12]
 
         return http.request.render('my_pharmacy.pharmacy', {
             'pharmacies': pharmacies,
             'search': search,
-            'search_in': search_in,
             'cities': cities,
-            'neighborhoods' : neighborhoods,
             'city_filter': city_filter,
-            'neighborhood_filter' : neighborhood_filter,
             'permanence_filter' : permanence_filter,
+            'show_more': show_more,
         })
     
     @http.route('/pharmacy/detail/<int:pharmacy_id>', auth="public", website=True)
-    def pharmacy_detail_page(self, pharmacy_id, search_name=None):
+    def pharmacy_detail_page(self, pharmacy_id , search_name="", show_more=False):
         pharmacy_id = int(pharmacy_id)
-
         pharmacy = request.env['pharmacy.pharmacy'].sudo().browse(pharmacy_id)
 
-        search_domain = [('name', 'ilike', search_name)] if search_name else []
+        search_domain = [('name', 'ilike', '%' + search_name + '%')]
 
-        medicines = pharmacy.medicines.filtered_domain(search_domain) if search_name else pharmacy.medicines
+        medicines = pharmacy.medicines
+        
+        if not show_more:
+            medicines = medicines[:12]
+
+        if search_name:
+            show_more = True
+            medicines = medicines.search(search_domain)
 
         return http.request.render('my_pharmacy.pharmacy_detail', {
             'pharmacy': pharmacy,
             'medicines': medicines,
             'search_name': search_name,
+            'show_more': show_more,
         })
 
+
+    def haversine(self, coord1, coord2):
+        # Calculate the distance between two coordinates using the Haversine formula
+        # Coordinates are given as (latitude, longitude)
+        R = 6371.0  # Earth radius in kilometers
+
+        lat1, lon1 = radians(coord1[0]), radians(coord1[1])
+        lat2, lon2 = radians(coord2[0]), radians(coord2[1])
+
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        distance = R * c  # Distance in kilometers
+        return distance * 1000.0  # Convert to meters

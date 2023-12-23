@@ -17,16 +17,15 @@
                 <group class="o_group">
                     <group>
                         <field name="name"/>
-                        <field name="indication"/>
-                        <field name="description"/>
-                        <field name="distributer"/>
+                        <field name="presentation"/>
+                        <field name="forme"/>
                         <field name="pharmacies" widget="many2many_tags"/>
                     </group>
                     <group>
-                        <field name="logo" widget="image" class="oe_left oe_avatar"/>
                         <field name="composition"/>
-                        <field name="public_price"/>
-                        <field name="isInStock"/>
+                        <field name="price"/>
+                        <field name="dosage"/>
+                        <field name="unit_dosage"/>
                     </group>
                 </group>
             </form>
@@ -39,14 +38,14 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="indication"/>
-                <field name="description"/>
-                <field name="distributer"/>
+                <field name="presentation"/>
+                <field name="forme"/>
                 <field name="composition"/>
-                <field name="public_price"/>
-                <field name="pharmacies"/>
-                <field name="isInStock"/>
+                <field name="price"/>
+                <field name="dosage"/>
+                <field name="unit_dosage"/>
             </tree>
         </field>
     </record>
+
 </odoo>
