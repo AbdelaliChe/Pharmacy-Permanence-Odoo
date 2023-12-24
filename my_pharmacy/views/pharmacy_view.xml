@@ -25,7 +25,7 @@
                         <field name="short_name"/>
                         <field name="address"/>
                         <field name="country"/>
-                        <field name="city" on_change="1"/>
+                        <field name="city"/>
                         <field name="medicines" widget="many2many_tags"/>
                     </group>
                     <group>

@@ -12,6 +12,7 @@
         'views/pharmacy_home.xml',
         'security/ir.model.access.csv',
         'views/medicines_view.xml',
+        'views/permanence_view.xml',
     ],
     'installable': True,
     'application': True,

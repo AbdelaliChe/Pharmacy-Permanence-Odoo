@@ -6,8 +6,8 @@ class Pharmacy(models.Model):
     _description = 'Pharmacy Pharmacy'
     _rec_name = 'short_name'
 
-    short_name = fields.Char('Short Title', required=True)
-    name = fields.Char('Title', required=True)
+    short_name = fields.Char('Short Name', required=True)
+    name = fields.Char('Name', required=True)
     country = fields.Many2one('res.country', string='Country', default=lambda self: self.env.ref('base.ma', raise_if_not_found=False), readonly=True)
     city = fields.Char('City', required=True)
     address = fields.Char('address')
@@ -27,11 +27,16 @@ class Pharmacy(models.Model):
 
     def make_permanent(self):
         self.ensure_one()
-        self.permanenceState = 'NonPermanence'
+        self.permanenceState = 'Permanence'
 
     def make_non_permanent(self):
         self.ensure_one()
-        self.permanenceState = 'Permanence'
+        self.permanenceState = 'NonPermanence'
+
+    @api.returns('self', lambda value: value.id)
+    def generate_pharmacy_report(self):
+        report_name = 'report.pharmacy.pharmacy_report_template'
+        return self.env.ref(report_name).report_action(self)
 
 
     #get cities fro data/Morocco_cities.txt

@@ -28,7 +28,7 @@
                                                 <i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
                                         </div>
                                     </div>
-                                    <div class="mt-2">
+                                    <div class="mt-4">
                                         <div class="form-group mx-2 d-inline-block">
                                             <a class="badge bg-dark text-truncate text-decoration-none p-2" t-att-href="pharmacy.localisation_link" target="_blank">
                                                 <i class="fa-solid fa-location-crosshairs me-2"></i>Address : <t t-esc="pharmacy.address" />

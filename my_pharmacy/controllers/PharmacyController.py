@@ -7,16 +7,17 @@ class PharmacyController(http.Controller):
     @http.route('/pharmacy', auth="public", website=True)
     def pharmacy_page(self, search="", city_filter="", permanence_filter="", latitude=None, longitude=None, show_more=False):
         
-        search_domain = [('name', 'ilike', '%' + search + '%')]
+        search_domain = []
 
         all_cities = request.env['pharmacy.pharmacy'].sudo().search([('city', '!=', False)]).mapped('city')
         cities = set(all_cities)
 
-        if city_filter:
-            search_domain += [('city', '=', city_filter)]
+        if search:
+            search_domain += [('name', 'ilike', '%' + search + '%')]
             show_more = True
 
-        if search:
+        if city_filter:
+            search_domain += [('city', '=', city_filter)]
             show_more = True
 
         if permanence_filter:
@@ -27,18 +28,13 @@ class PharmacyController(http.Controller):
 
         if latitude and longitude:
             search_domain += [('latitude', '=', float(latitude)), ('longitude', '=', float(longitude))]
-
             user_location = (float(latitude), float(longitude))
-
             # Create a list of tuples containing pharmacy records and distances
             pharmacies_with_distances = [(pharmacy, self.haversine(user_location, (pharmacy.latitude, pharmacy.longitude))) for pharmacy in pharmacies]
-
             # Sort pharmacies by distance
             sorted_pharmacies = sorted(pharmacies_with_distances, key=lambda x: x[1])
-
             # Extract sorted pharmacy records from the list
             sorted_pharmacies = [record[0] for record in sorted_pharmacies]
-
             pharmacies = sorted_pharmacies
             show_more = True
 
@@ -52,6 +48,8 @@ class PharmacyController(http.Controller):
             'city_filter': city_filter,
             'permanence_filter' : permanence_filter,
             'show_more': show_more,
+            'latitude': latitude,
+            'longitude': longitude, 
         })
     
     @http.route('/pharmacy/detail/<int:pharmacy_id>', auth="public", website=True)
