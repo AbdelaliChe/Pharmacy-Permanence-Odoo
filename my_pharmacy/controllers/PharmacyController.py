@@ -1,4 +1,5 @@
-from odoo import http
+from odoo import http, fields
+from datetime import datetime, timedelta
 from odoo.http import request
 from math import radians, sin, cos, sqrt, atan2
 
@@ -87,6 +88,22 @@ class PharmacyController(http.Controller):
         pharmacy_id = int(pharmacy_id)
         medicine_id = int(medicine_id)
         bookingNbr = int(bookingNbr)
+
+        # Assuming you have the necessary logic to retrieve the stock record
+        stock_record = request.env['pharmacy.stock'].search([('pharmacie_id.id', '=', pharmacy_id), ('medicament_id.id', '=', medicine_id)])
+
+        # Create a new pharmacy.commande record
+        commande_data = {
+            'code' : bookingNbr,
+            'stock_id': stock_record.id,
+            'commandeBookDate': fields.Datetime.now(),
+            'schedule_cancel_date': fields.Datetime.now() + timedelta(minutes=5),
+        }
+
+        new_commande = request.env['pharmacy.commande'].create(commande_data)
+
+        # Assuming you want to mark the commande as booked immediately
+        new_commande.make_booked()
 
         return http.local_redirect('/pharmacy/detail/{}'.format(pharmacy_id))
 

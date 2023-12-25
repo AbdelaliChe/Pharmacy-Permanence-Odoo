@@ -2,4 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pharmacy_pharmacy_public,pharmacy.pharmacy,model_pharmacy_pharmacy,base.group_public,1,0,0,0
 access_pharmacy_pharmacy,access.pharmacy.pharmacie,model_pharmacy_pharmacy,,1,1,1,1
 access_pharmacy_medicine,access.pharmacy.medicine,model_pharmacy_medicine,,1,1,1,1
+access_pharmacy_permanence,access.pharmacy.permanence,model_pharmacy_permanence,,1,1,1,1
 access_pharmacy_stock,access.pharmacy.stock,model_pharmacy_stock,,1,1,1,1
+access_pharmacy_commande,access.pharmacy.commande,model_pharmacy_commande,,1,1,1,1

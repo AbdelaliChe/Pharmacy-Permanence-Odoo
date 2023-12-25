@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id='commande_action_form' model='ir.actions.act_window'>
+    <field name="name">Commande</field>
+    <field name="res_model">pharmacy.commande</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('pharmacie.owner_id', '=', uid)]</field>
+</record>
+
+<menuitem name="Pharmacy" id="pharmacy_main_menu"/>  <!-- SAME IN ALL VIEWS-->
+<menuitem name="Commande" id="commande_menu" parent="pharmacy_main_menu" action="commande_action_form"/> 
+
+
+<record id="commande_view_form" model="ir.ui.view">
+    <field name="name">commande Form</field>
+    <field name="model">pharmacy.commande</field>
+    <field name="arch" type="xml"> 
+        <form>
+            <header class="o_form_header">
+                <button name="make_booked" string="Book medicine" type="object"/>
+                <button name="make_canceled" string="Cancel command" type="object"/>
+                <button name="make_payed" string="Finish command" type="object"/>
+                <field name="commandeState" widget="statusbar" class="o_statusbar_status"/>
+            </header>
+            <group>
+                <field name="code"/>
+                <field name="stock_id"/>
+                <field name="commandeBookDate"/>
+            </group>
+           
+        </form>
+        
+    </field>
+
+</record>
+
+
+<record id="commande_view_list" model="ir.ui.view">
+    <field name="name">commande List</field>
+    <field name="model">pharmacy.commande</field>
+    <field name="arch" type="xml"> 
+        <tree>
+            <field name="code"/>
+            <field name="stock_id"/>
+            <field name="pharmacie"/>
+            <field name="medicament"/>
+            <field name="commandeBookDate"/>
+            <field name="commandeState"/>
+        </tree>
+
+    </field>
+
+</record>
+
+
+</odoo>
