@@ -25,7 +25,7 @@ class Stock(models.Model):
             for pharmacy in pharmacies:
                 i=0
                 for medicament in medicaments:
-                    if i==50:
+                    if i==15:
                         break
                     # Check if the stock record already exists
                     existing_stock = self.search([
