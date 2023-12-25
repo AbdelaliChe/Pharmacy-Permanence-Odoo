@@ -15,7 +15,16 @@ class Medicine(models.Model):
     unit_dosage = fields.Char(string='Unite Dosage')
 
     @api.model
+    def _auto_init(self):
+        res = super(Medicine, self)._auto_init()
+        self.associate_with_all_pharmacies()
+        return res
+
+   
     def associate_with_all_pharmacies(self):
-        pharmacies = self.env['pharmacy.pharmacy'].search([])
-        for medicine in self.search([]):
-            medicine.write({'pharmacies': [(6, 0, pharmacies.ids)]})
+        med = self.search([], limit=1)
+        if len(med.pharmacies)==0:
+            pharmacies = self.env['pharmacy.pharmacy'].search([])
+            for medicine in self.search([]):
+                medicine.write({'pharmacies': [(6, 0, pharmacies.ids)]})
+        return True

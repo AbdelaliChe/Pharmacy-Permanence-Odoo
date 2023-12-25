@@ -55,11 +55,19 @@ class PharmacyController(http.Controller):
     @http.route('/pharmacy/detail/<int:pharmacy_id>', auth="public", website=True)
     def pharmacy_detail_page(self, pharmacy_id , search_name="", show_more=False):
         pharmacy_id = int(pharmacy_id)
-        pharmacy = request.env['pharmacy.pharmacy'].sudo().browse(pharmacy_id)
+       
+        pharmacy_stock = request.env['pharmacy.stock'].sudo().search([('pharmacie_id.id', '=', pharmacy_id)])
+
+
+        medicines = []
+        
+        for st in pharmacy_stock:
+            medic = st.medicament_id
+            medicines.append(medic)
 
         search_domain = [('name', 'ilike', '%' + search_name + '%')]
 
-        medicines = pharmacy.medicines
+       
         
         if not show_more:
             medicines = medicines[:12]
@@ -69,7 +77,7 @@ class PharmacyController(http.Controller):
             medicines = medicines.search(search_domain)
 
         return http.request.render('my_pharmacy.pharmacy_detail', {
-            'pharmacy': pharmacy,
+            'pharmacy': pharmacy_stock.pharmacie_id,
             'medicines': medicines,
             'search_name': search_name,
             'show_more': show_more,

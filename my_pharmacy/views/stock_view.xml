@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id='stock_action_form' model='ir.actions.act_window'>
+    <field name="name">Stock</field>
+    <field name="res_model">pharmacy.stock</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
+    <!--  <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
+    <field name="context">{'default_owner_id': uid}</field>
+    <field name="binding_model_id" ref="test-user.model_test_pharmacie"/> -->
+</record>
+
+<menuitem name="Pharmacy" id="pharmacy_main_menu"/>  <!-- SAME IN ALL VIEWS-->
+<menuitem name="Stock" id="stock_menu" parent="pharmacy_main_menu" action="stock_action_form"/> 
+
+
+<record id="stock_view_form" model="ir.ui.view">
+    <field name="name">Stock Form</field>
+    <field name="model">pharmacy.stock</field>
+    <field name="arch" type="xml"> 
+        <form>
+            <group>
+                <field name="pharmacie_id"/>
+                <field name="medicament_id"/>
+                <field name="quantity"/>
+            </group>
+           
+        </form>
+        
+    </field>
+
+</record>
+
+
+<record id="stock_view_list" model="ir.ui.view">
+    <field name="name">Stock List</field>
+    <field name="model">pharmacy.stock</field>
+    <field name="arch" type="xml"> 
+        <tree>
+            <field name="pharmacie_id"/>
+            <field name="medicament_id"/>
+            <field name="quantity"/>
+        </tree>
+
+    </field>
+
+</record>
+
+
+</odoo>
