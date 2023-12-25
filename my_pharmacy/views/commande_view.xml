@@ -6,6 +6,7 @@
     <field name="name">Commande</field>
     <field name="res_model">pharmacy.commande</field>
     <field name="view_mode">tree,form</field>
+    <field name="domain">[('pharmacie.owner_id', '=', uid)]</field>
 </record>
 
 <menuitem name="Pharmacy" id="pharmacy_main_menu"/>  <!-- SAME IN ALL VIEWS-->
