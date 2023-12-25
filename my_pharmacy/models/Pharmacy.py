@@ -36,11 +36,6 @@ class Pharmacy(models.Model):
         self.ensure_one()
         self.permanenceState = 'NonPermanence'
 
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> 493514626ac983f275ddcc20a7c19721cdf894ec
     #get cities fro data/Morocco_cities.txt
     cities = ["Casablanca",
     "Fes",
