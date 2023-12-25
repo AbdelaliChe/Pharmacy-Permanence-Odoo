@@ -33,12 +33,6 @@ class Pharmacy(models.Model):
         self.ensure_one()
         self.permanenceState = 'NonPermanence'
 
-    @api.returns('self', lambda value: value.id)
-    def generate_pharmacy_report(self):
-        report_name = 'report.pharmacy.pharmacy_report_template'
-        return self.env.ref(report_name).report_action(self)
-
-
     #get cities fro data/Morocco_cities.txt
     cities = []
     

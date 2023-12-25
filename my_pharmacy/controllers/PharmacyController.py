@@ -10,7 +10,7 @@ class PharmacyController(http.Controller):
         search_domain = []
 
         all_cities = request.env['pharmacy.pharmacy'].sudo().search([('city', '!=', False)]).mapped('city')
-        cities = set(all_cities)
+        cities = sorted(set(all_cities))
 
         if search:
             search_domain += [('name', 'ilike', '%' + search + '%')]
