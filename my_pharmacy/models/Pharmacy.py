@@ -25,9 +25,6 @@ class Pharmacy(models.Model):
     longitude = fields.Float('Longitude')
     owner_id = fields.Many2one('res.users', string='Pharmacy Owner')
 
-   
-
-
     def make_permanent(self):
         self.ensure_one()
         self.permanenceState = 'Permanence'
@@ -36,11 +33,6 @@ class Pharmacy(models.Model):
         self.ensure_one()
         self.permanenceState = 'NonPermanence'
 
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> 493514626ac983f275ddcc20a7c19721cdf894ec
     #get cities fro data/Morocco_cities.txt
     cities = ["Casablanca",
     "Fes",
@@ -294,7 +286,6 @@ class Pharmacy(models.Model):
     #for fetching all pharamcies from morocco using google map api
     #through the action automized
     #allready done so for saving time just upload the file in data->pharamcy.pharmacy
-   
     def fetch_and_populate_all_pharmacies(self):
         pharmacies = self.env['pharmacy.pharmacy'].search([])
         if len(pharmacies)==0:

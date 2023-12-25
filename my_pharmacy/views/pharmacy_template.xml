@@ -36,9 +36,8 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <a class="navbar-brand fw-bold text-success" href="/pharmacy">
                             <i class="fa fa-notes-medical me-2"></i>PermaPharma</a>
-                        <a class="btn btn-outline-success" href="http://localhost:8069/web/login">
-                            <i class="fa-solid fa-download me-2"></i>Permanence File
-                        </a>
+                        <a class="text-decoration-none btn btn-outline-success" href="http://localhost:8069/web/login">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Login</a>
                     </div>
                     <div class="card-body">
                         <div class="p-3 text-center">
@@ -156,8 +155,8 @@
                     </div>
                     <div class="card-footer text-center">
                         <small class="text-muted">
-                            <a class="text-decoration-none text-success" href="http://localhost:8069/web/login">
-                                <i class="fa-solid fa-right-to-bracket me-2"></i>Login as Admin</a>
+                            <a class="text-decoration-none text-success" href="/pharmacy">
+                                <i class="fa fa-notes-medical me-2"></i>PermaPharma</a>
                         </small>
                     </div>
                 </div>

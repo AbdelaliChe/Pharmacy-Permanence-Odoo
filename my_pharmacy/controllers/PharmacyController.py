@@ -55,33 +55,41 @@ class PharmacyController(http.Controller):
     @http.route('/pharmacy/detail/<int:pharmacy_id>', auth="public", website=True)
     def pharmacy_detail_page(self, pharmacy_id , search_name="", show_more=False):
         pharmacy_id = int(pharmacy_id)
-       
         pharmacy_stock = request.env['pharmacy.stock'].sudo().search([('pharmacie_id.id', '=', pharmacy_id)])
 
 
         medicines = []
+        dic_med_quantity = {}
         
         for st in pharmacy_stock:
             medic = st.medicament_id
             medicines.append(medic)
-
-        search_domain = [('name', 'ilike', '%' + search_name + '%')]
-
-       
+            dic_med_quantity[medic] = st.quantity
         
         if not show_more:
             medicines = medicines[:12]
 
         if search_name:
             show_more = True
-            medicines = medicines.search(search_domain)
+            medicines = [medic for medic in medicines if search_name.lower() in medic.name.lower()]
 
         return http.request.render('my_pharmacy.pharmacy_detail', {
+            'quantity' : dic_med_quantity,
             'pharmacy': pharmacy_stock.pharmacie_id,
+            'stock' : pharmacy_stock,
             'medicines': medicines,
             'search_name': search_name,
             'show_more': show_more,
         })
+    
+    @http.route('/pharmacy/detail/<int:pharmacy_id>/<int:medicine_id>/book/<int:bookingNbr>', auth="public", website=True)
+    def book_pharmacy_detail_page(self, pharmacy_id , medicine_id, bookingNbr):
+        pharmacy_id = int(pharmacy_id)
+        medicine_id = int(medicine_id)
+        bookingNbr = int(bookingNbr)
+
+        return http.local_redirect('/pharmacy/detail/{}'.format(pharmacy_id))
+
 
 
     def haversine(self, coord1, coord2):

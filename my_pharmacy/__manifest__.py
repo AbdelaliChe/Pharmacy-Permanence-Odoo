@@ -13,7 +13,8 @@
         'views/pharmacy_home.xml',
         'views/medicines_view.xml',
         'views/permanence_view.xml',
-        'views/stock_view.xml'
+        'views/stock_view.xml',
+        'views/my_pharmacy_report_template.xml',
     ],
     'installable': True,
     'application': True,

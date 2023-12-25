@@ -26,7 +26,6 @@
                 <field name="medicament_id"/>
                 <field name="quantity"/>
             </group>
-           
         </form>
         
     </field>

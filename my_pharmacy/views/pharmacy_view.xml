@@ -91,7 +91,7 @@
                 <field name="name"/>
                 <field name="city"/>
                 <field name="country"/>
-                <filter string="Permanence" name="permanenceState" domain="[('permanenceState', '=', 'permanence')]"/>
+                <filter string="Permanence" name="permanenceState" domain="[('permanenceState', '=', 'Permanence')]"/>
             </search>
         </field>
     </record>
