@@ -26,6 +26,7 @@
                         <field name="address"/>
                         <field name="country"/>
                         <field name="city"/>
+                        <field name="owner_id"/>
                         <field name="medicines" widget="many2many_tags"/>
                     </group>
                     <group>
