@@ -33,6 +33,11 @@ class Pharmacy(models.Model):
         self.ensure_one()
         self.permanenceState = 'NonPermanence'
 
+
+    def print_pharmacy_report(self):
+        data = {}  # You can pass any data needed for the report
+        return self.env.ref('my_pharmacy.pharmacy_report_action').report_action([self.id], data=data)
+
     #get cities fro data/Morocco_cities.txt
     cities = ["Casablanca",
     "Fes",

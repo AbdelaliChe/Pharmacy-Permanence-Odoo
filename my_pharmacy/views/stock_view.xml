@@ -2,50 +2,91 @@
 
 <odoo>
 
-<record id='stock_action_form' model='ir.actions.act_window'>
-    <field name="name">Stock</field>
-    <field name="res_model">pharmacy.stock</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
-    <!--  <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
+    <record id='stock_action_form' model='ir.actions.act_window'>
+        <field name="name">Stock</field>
+        <field name="res_model">pharmacy.stock</field>
+        <field name="view_mode">tree,form,graph,kanban,search</field>
+        <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
+        <!--  <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
     <field name="context">{'default_owner_id': uid}</field>
     <field name="binding_model_id" ref="test-user.model_test_pharmacie"/> -->
-</record>
+    </record>
 
-<menuitem name="Pharmacy" id="pharmacy_main_menu"/>  <!-- SAME IN ALL VIEWS-->
-<menuitem name="Stock" id="stock_menu" parent="pharmacy_main_menu" action="stock_action_form"/> 
+    <menuitem name="Pharmacy" id="pharmacy_main_menu"/>
+    <!-- SAME IN ALL VIEWS-->
+    <menuitem name="Stock" id="stock_menu" parent="pharmacy_main_menu" action="stock_action_form"/>
 
 
-<record id="stock_view_form" model="ir.ui.view">
-    <field name="name">Stock Form</field>
-    <field name="model">pharmacy.stock</field>
-    <field name="arch" type="xml"> 
-        <form>
-            <group>
+    <record id="stock_view_form" model="ir.ui.view">
+        <field name="name">Stock Form</field>
+        <field name="model">pharmacy.stock</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="pharmacie_id"/>
+                    <field name="medicament_id"/>
+                    <field name="quantity"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="stock_view_list" model="ir.ui.view">
+        <field name="name">Stock List</field>
+        <field name="model">pharmacy.stock</field>
+        <field name="arch" type="xml">
+            <tree>
                 <field name="pharmacie_id"/>
                 <field name="medicament_id"/>
                 <field name="quantity"/>
-            </group>
-        </form>
-        
-    </field>
+            </tree>
+        </field>
+    </record>
 
-</record>
+    <record id="stock_action_graph" model="ir.ui.view">
+        <field name="name">Stock Graph</field>
+        <field name="model">pharmacy.stock</field>
+        <field name="arch" type="xml">
+            <graph string="Stock Graph">
+                <field name="pharmacie_id" type="row"/>
+                <field name="quantity" type="measure"/>
+                <field name="medicament_id" type="row"/>
+            </graph>
+        </field>
+    </record>
 
+    <record id="stock_view_search" model="ir.ui.view">
+        <field name="name">Stock Search</field>
+        <field name="model">pharmacy.stock</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="pharmacie_id"/>
+                <field name="medicament_id"/>
+            </search>
+        </field>
+    </record>
 
-<record id="stock_view_list" model="ir.ui.view">
-    <field name="name">Stock List</field>
-    <field name="model">pharmacy.stock</field>
-    <field name="arch" type="xml"> 
-        <tree>
-            <field name="pharmacie_id"/>
-            <field name="medicament_id"/>
-            <field name="quantity"/>
-        </tree>
-
-    </field>
-
-</record>
-
+    <record id="stock_action_kanban" model="ir.ui.view">
+        <field name="name">Stock Kanban</field>
+        <field name="model">pharmacy.stock</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div class="o_kanban_primary">
+                                <field name="pharmacie_id"/>
+                                <field name="medicament_id"/>
+                            </div>
+                            <div class="o_kanban_secondary">
+                                <field name="quantity"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
 </odoo>
