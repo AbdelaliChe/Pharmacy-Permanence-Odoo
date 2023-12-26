@@ -5,6 +5,7 @@
         <field name="res_model">pharmacy.pharmacy</field>
         <field name="view_mode">tree,form,graph,calendar,search</field>
     </record>
+   
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu" />
     <menuitem name="Pharmacies" id="Pharmacy_pharmacy_menu" parent="pharmacy_main_menu" action="pharmacy_pharmacy_action_form"/>
