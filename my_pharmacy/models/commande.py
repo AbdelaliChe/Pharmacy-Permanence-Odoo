@@ -42,5 +42,3 @@ class Commande(models.Model):
 
         for commande in overdue_commandes:
             commande.make_canceled()
-
-   

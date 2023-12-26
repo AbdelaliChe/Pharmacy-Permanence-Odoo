@@ -2,57 +2,104 @@
 
 <odoo>
 
-<record id='commande_action_form' model='ir.actions.act_window'>
-    <field name="name">Commande</field>
-    <field name="res_model">pharmacy.commande</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain">[('pharmacie.owner_id', '=', uid)]</field>
-</record>
+    <record id='commande_action_form' model='ir.actions.act_window'>
+        <field name="name">Commande</field>
+        <field name="res_model">pharmacy.commande</field>
+        <field name="view_mode">tree,form,graph,calendar,kanban,search</field>
+        <field name="domain">[('pharmacie.owner_id', '=', uid)]</field>
+    </record>
 
-<menuitem name="Pharmacy" id="pharmacy_main_menu"/>  <!-- SAME IN ALL VIEWS-->
-<menuitem name="Commande" id="commande_menu" parent="pharmacy_main_menu" action="commande_action_form"/> 
+    <menuitem name="Pharmacy" id="pharmacy_main_menu"/>
+    <!-- SAME IN ALL VIEWS-->
+    <menuitem name="Commande" id="commande_menu" parent="pharmacy_main_menu" action="commande_action_form"/>
 
 
-<record id="commande_view_form" model="ir.ui.view">
-    <field name="name">commande Form</field>
-    <field name="model">pharmacy.commande</field>
-    <field name="arch" type="xml"> 
-        <form>
-            <header class="o_form_header">
-                <button name="make_booked" string="Book medicine" type="object"/>
-                <button name="make_canceled" string="Cancel command" type="object"/>
-                <button name="make_payed" string="Finish command" type="object"/>
-                <field name="commandeState" widget="statusbar" class="o_statusbar_status"/>
-            </header>
-            <group>
+    <record id="commande_view_form" model="ir.ui.view">
+        <field name="name">Commande Form</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <form>
+                <header class="o_form_header">
+                    <button name="make_booked" string="Book medicine" type="object"/>
+                    <button name="make_canceled" string="Cancel command" type="object"/>
+                    <button name="make_payed" string="Finish command" type="object"/>
+                    <field name="commandeState" widget="statusbar" class="o_statusbar_status"/>
+                </header>
+                <group>
+                    <field name="code"/>
+                    <field name="stock_id"/>
+                    <field name="commandeBookDate"/>
+                </group>
+            </form>
+
+        </field>
+
+    </record>
+
+
+    <record id="commande_view_list" model="ir.ui.view">
+        <field name="name">Commande List</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <tree>
                 <field name="code"/>
                 <field name="stock_id"/>
+                <field name="pharmacie"/>
+                <field name="medicament"/>
                 <field name="commandeBookDate"/>
-            </group>
-           
-        </form>
-        
-    </field>
+                <field name="commandeState"/>
+            </tree>
 
-</record>
+        </field>
+
+    </record>
+
+    <record id="commande_view_graph" model="ir.ui.view">
+        <field name="name">Commande Graph</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <graph string="Commande Graph" type="bar">
+                <field name="commandeBookDate" interval="month"/>
+                <field name="pharmacie"/>
+                <field name="medicament"/>
+                <field name="commandeState"/>
+                <field name="code" type="measure"/>
+            </graph>
+        </field>
+    </record>
 
 
-<record id="commande_view_list" model="ir.ui.view">
-    <field name="name">commande List</field>
-    <field name="model">pharmacy.commande</field>
-    <field name="arch" type="xml"> 
-        <tree>
-            <field name="code"/>
-            <field name="stock_id"/>
-            <field name="pharmacie"/>
-            <field name="medicament"/>
-            <field name="commandeBookDate"/>
-            <field name="commandeState"/>
-        </tree>
+    <record id="commande_search_view" model="ir.ui.view">
+        <field name="name">Commande Search</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code" string="Code"/>
+                <field name="stock_id" string="Stock"/>
+                <field name="pharmacie" string="Pharmacy"/>
+                <field name="medicament" string="Medicament"/>
+                <filter string="Booked" name="commandeState" domain="[('commandeState', '=', 'booked')]"/>
+                <filter string="Canceled" name="commandeState" domain="[('commandeState', '=', 'canceled')]"/>
+                <filter string="Payed" name="commandeState" domain="[('commandeState', '=', 'payed')]"/>
+            </search>
+        </field>
+    </record>
 
-    </field>
+    <record id="commande_view_calendar" model="ir.ui.view">
+        <field name="name">Commande Calendar</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <calendar string="Commande Calendar" date_start="commandeBookDate" date_stop="schedule_cancel_date">
+                <field name="pharmacie"/>
+                <field name="medicament"/>
+                <field name="commandeState"/>
+                <field name="code"/>
+            </calendar>
+        </field>
+    </record>
 
-</record>
+
+
 
 
 </odoo>

@@ -2,7 +2,6 @@
 
 <odoo>
 
-<<<<<<< HEAD
     <record id='stock_action_form' model='ir.actions.act_window'>
         <field name="name">Stock</field>
         <field name="res_model">pharmacy.stock</field>
@@ -12,14 +11,12 @@
     <field name="context">{'default_owner_id': uid}</field>
     <field name="binding_model_id" ref="test-user.model_test_pharmacie"/> -->
     </record>
-=======
-<record id='stock_action_form' model='ir.actions.act_window'>
-    <field name="name">Stock</field>
-    <field name="res_model">pharmacy.stock</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
-</record>
->>>>>>> 186d7c5e2fdb0d60528881ac2d11829b65109ee9
+    <record id='stock_action_form' model='ir.actions.act_window'>
+        <field name="name">Stock</field>
+        <field name="res_model">pharmacy.stock</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
+    </record>
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu"/>
     <!-- SAME IN ALL VIEWS-->

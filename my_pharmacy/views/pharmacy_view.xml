@@ -94,6 +94,7 @@
                 <field name="name"/>
                 <field name="city"/>
                 <filter string="Permanence" name="permanenceState" domain="[('permanenceState', '=', 'Permanence')]"/>
+                <filter string="Non Permanence" name="permanenceState" domain="[('permanenceState', '=', 'NonPermanence')]"/>
             </search>
         </field>
     </record>
@@ -117,6 +118,19 @@
                         </div>
                     </t>
                 </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="commande_view_kanban" model="ir.ui.view">
+        <field name="name">commande Kanban</field>
+        <field name="model">pharmacy.commande</field>
+        <field name="arch" type="xml">
+            <kanban string="Commande Kanban">
+                <field name="code"/>
+                <field name="stock_id"/>
+                <field name="commandeBookDate"/>
+                <field name="commandeState"/>
             </kanban>
         </field>
     </record>

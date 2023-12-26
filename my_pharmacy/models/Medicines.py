@@ -20,7 +20,6 @@ class Medicine(models.Model):
         self.associate_with_all_pharmacies()
         return res
 
-   
     def associate_with_all_pharmacies(self):
         med = self.search([], limit=1)
         if len(med.pharmacies)==0:
