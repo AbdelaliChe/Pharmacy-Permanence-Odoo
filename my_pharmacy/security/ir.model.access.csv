@@ -10,5 +10,6 @@ admin_access_medicine,admin.access.medicine,model_pharmacy_medicine,group_pharma
 
 owner_access_pharmacy,admin.access.pharmacy,model_pharmacy_pharmacy,group_pharmacy_owner,1,0,0,0
 owner_access_permanence,owner.access.permanence,model_pharmacy_permanence,group_pharmacy_owner,1,0,0,0
+owner_access_medicine,owner.access.medicine,model_pharmacy_medicine,group_pharmacy_owner,1,0,0,0
 owner_access_stock,owner.access.stock,model_pharmacy_stock,group_pharmacy_owner,1,1,1,1
 owner_access_commande,owner.access.commande,model_pharmacy_commande,group_pharmacy_owner,1,1,1,1

@@ -15,14 +15,9 @@
         'views/medicines_view.xml',
         'views/permanence_view.xml',
         'views/stock_view.xml',
-<<<<<<< HEAD
-=======
         'views/commande_view.xml',
         'report/command_details.xml',
         'report/report.xml'
-
-
->>>>>>> 186d7c5e2fdb0d60528881ac2d11829b65109ee9
     ],
     'installable': True,
     'application': True,
