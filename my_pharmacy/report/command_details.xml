@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="report_commande_id">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="header">
+                    <h2 class="report-title">Commands Details</h2>
+                    <p class="report-date">Date: <t t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                </div>
+                <div class="content">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Pharmacy</th>
+                                <th>Medicine</th>
+                                <th>Book Date</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="record">
+                                <td><t t-esc="record.code or ''"/></td>
+                                <td><t t-esc="record.pharmacie.name or ''"/></td>
+                                <td><t t-esc="record.medicament.name or ''"/></td>
+                                <td><t t-esc="record.commandeBookDate or ''"/></td>
+                                <td><t t-esc="record.commandeState or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary">
+                    <div class="summary-item">
+                        <p>Total Booked Medicines: <span><t t-esc="len(docs.filtered(lambda r: r.commandeState == 'booked'))"/></span></p>
+                    </div>
+                    <div class="summary-item">
+                        <p>Total Canceled Medicines: <span><t t-esc="len(docs.filtered(lambda r: r.commandeState == 'canceled'))"/></span></p>
+                    </div>
+                    <div class="summary-item">
+                        <p>Total Paid Medicines: <span><t t-esc="len(docs.filtered(lambda r: r.commandeState == 'payed'))"/></span></p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

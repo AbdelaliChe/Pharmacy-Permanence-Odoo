@@ -16,6 +16,8 @@
         'views/permanence_view.xml',
         'views/stock_view.xml',
         'views/commande_view.xml',
+        'report/command_details.xml',
+        'report/report.xml'
     ],
     'installable': True,
     'application': True,
