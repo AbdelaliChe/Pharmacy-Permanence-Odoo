@@ -3,7 +3,7 @@
     <record id='pharmacy_pharmacy_action_form' model='ir.actions.act_window'>
         <field name="name">Pharmacy Pharmacy</field>
         <field name="res_model">pharmacy.pharmacy</field>
-        <field name="view_mode">tree,form,graph,calendar,search</field>
+        <field name="view_mode">tree,form,graph,calendar,search,kanban</field>
     </record>
    
 
@@ -64,12 +64,13 @@
     </record>
 
     <record id="pharmacy_pharmacy_action_graph" model="ir.ui.view">
-        <field name="name">Pharmacy Pharmacy Graph</field>
+        <field name="name">Pharmacy Pharmacy Extended Graph</field>
         <field name="model">pharmacy.pharmacy</field>
         <field name="arch" type="xml">
             <graph string="Pharmacies">
                 <field name="name" type="row"/>
                 <field name="dateStartPermanence" type="measure"/>
+                <field name="city" type="row"/>
             </graph>
         </field>
     </record>
@@ -80,20 +81,44 @@
             <calendar date_start="dateStartPermanence" date_stop="dateEndPermanence">
                 <field name="name"/>
                 <field name="permanenceState"/>
+                <field name="city"/>
+                <field name="country"/>
             </calendar>
         </field>
     </record>
 
     <record id="pharmacy_pharmacy_view_search" model="ir.ui.view">
-        <field name="name">Pharmacy Pharmacy Search</field>
+        <field name="name">Pharmacy Pharmacy Extended Search</field>
         <field name="model">pharmacy.pharmacy</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
                 <field name="city"/>
-                <field name="country"/>
                 <filter string="Permanence" name="permanenceState" domain="[('permanenceState', '=', 'Permanence')]"/>
             </search>
+        </field>
+    </record>
+
+    <record id="pharmacy_pharmacy_action_kanban" model="ir.ui.view">
+        <field name="name">Pharmacy Pharmacy Kanban</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div class="o_kanban_primary">
+                                <field name="name"/>
+                            </div>
+                            <div class="o_kanban_secondary">
+                                <field name="city"/>
+                                <field name="country"/>
+                                <field name="address"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 

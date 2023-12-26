@@ -3,7 +3,7 @@
     <record id='pharmacy_permanence_action_form' model='ir.actions.act_window'>
         <field name="name">Pharmacy Permanence</field>
         <field name="res_model">pharmacy.permanence</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph,kanban,search</field>
     </record>
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu" />
@@ -32,6 +32,52 @@
                 <field name="city"/>
                 <field name="garde_status"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="pharmacy_permanence_action_graph" model="ir.ui.view">
+        <field name="name">Pharmacy Permanence Graph</field>
+        <field name="model">pharmacy.permanence</field>
+        <field name="arch" type="xml">
+            <graph string="Pharmacy Permanence Graph">
+                <field name="name" type="row"/>
+                <field name="garde_status" type="measure"/>
+                <field name="city" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="pharmacy_permanence_view_search" model="ir.ui.view">
+        <field name="name">Pharmacy Permanence Search</field>
+        <field name="model">pharmacy.permanence</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="city"/>
+                <filter string="Garde Status" name="garde_status"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="pharmacy_permanence_action_kanban" model="ir.ui.view">
+        <field name="name">Pharmacy Permanence Kanban</field>
+        <field name="model">pharmacy.permanence</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div class="o_kanban_primary">
+                                <field name="name"/>
+                            </div>
+                            <div class="o_kanban_secondary">
+                                <field name="city"/>
+                                <field name="garde_status"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
