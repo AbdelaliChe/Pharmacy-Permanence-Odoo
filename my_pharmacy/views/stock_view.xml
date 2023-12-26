@@ -2,10 +2,6 @@
 
 <odoo>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 925b47d0d9f254399ae90d5103c145603ae10e5d
     <record id='stock_action_form' model='ir.actions.act_window'>
         <field name="name">Stock</field>
         <field name="res_model">pharmacy.stock</field>
@@ -13,16 +9,6 @@
         <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
     
     </record>
-<<<<<<< HEAD
-    <record id='stock_action_form' model='ir.actions.act_window'>
-        <field name="name">Stock</field>
-        <field name="res_model">pharmacy.stock</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
-    </record>
-=======
-
->>>>>>> 925b47d0d9f254399ae90d5103c145603ae10e5d
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu"/>
     <!-- SAME IN ALL VIEWS-->
