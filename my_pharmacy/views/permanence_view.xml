@@ -14,10 +14,11 @@
         <field name="model">pharmacy.permanence</field>
         <field name="arch" type="xml">
             <form>
+            <group>
                 <field name="name"/>
-                <field name="short_name"/>
                 <field name="city"/>
                 <field name="garde_status"/>
+            </group>
             </form>
         </field>
     </record>
@@ -28,7 +29,6 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="short_name"/>
                 <field name="city"/>
                 <field name="garde_status"/>
             </tree>
@@ -54,7 +54,8 @@
             <search>
                 <field name="name"/>
                 <field name="city"/>
-                <filter string="Garde Status" name="garde_status"/>
+                <filter string="Garde 24h" name="garde_status" domain="[('garde_status', 'ilike', '(24 heures)')]"/>
+                <filter string="Garde jour" name="garde_status" domain="[('garde_status', 'ilike', 'Garde Jour (Ouvert entre 9h et 23h)')]"/>
             </search>
         </field>
     </record>
