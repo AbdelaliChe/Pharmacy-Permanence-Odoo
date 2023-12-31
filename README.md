@@ -1,8 +1,8 @@
 # Proximity and Permanence Pharmacy Management System
 
-![Screenshot 0](https://github.com/AbdelaliChe/Pharmacy-Permanence-Odoo/blob/main/my_pharmacy/static/pharmaPerma.png)
-
 Proximity and Permanence Pharmacy Management System—an efficient Odoo module designed for Moroccan pharmacies. This system ensures real-time updates on nearby and permanence pharmacies, along with a streamlined process for medicine booking.
+
+![Screenshot 0](https://github.com/AbdelaliChe/Pharmacy-Permanence-Odoo/blob/main/my_pharmacy/static/pharmaPerma.png)
 
 ## Features
 
