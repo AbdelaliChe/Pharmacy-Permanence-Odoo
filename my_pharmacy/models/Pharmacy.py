@@ -282,7 +282,9 @@ class Pharmacy(models.Model):
     "Bir Mezoui",
     "Bir Kacem",]
 
-    @api.model
+    # This part is commented because the api key is no longer valid to retreive data from google maps. You can use your own api key and uncomment this section.
+
+    """ @api.model
     def _auto_init(self):
         res = super(Pharmacy, self)._auto_init()
         self.fetch_and_populate_all_pharmacies()
@@ -356,3 +358,4 @@ class Pharmacy(models.Model):
             pass
 
         return b''
+ """
