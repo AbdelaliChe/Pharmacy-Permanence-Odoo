@@ -8,9 +8,8 @@ _logger = logging.getLogger(__name__)
 class Permanence(models.Model):
     _name = 'pharmacy.permanence'
     _description = 'Pharmacy Permanence'
-    _rec_name = 'short_name'
+    
 
-    short_name = fields.Char('Short name')
     name = fields.Char('Name', required=True)
     city = fields.Char('City', required=True)
     garde_status = fields.Char('Garde Status', required=True)
@@ -32,7 +31,7 @@ class Permanence(models.Model):
                 if name_similarity >= similarity_threshold and city_similarity >= similarity_threshold:
                     pharmacy.make_permanent()
                     self.update_pharmacy_permanence_dates(pharmacy, perma.garde_status)
-                    #break
+                    break
                 else:
                     pharmacy.make_non_permanent()
 

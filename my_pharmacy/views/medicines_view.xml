@@ -54,7 +54,6 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <field name="Pharmacies"/>
             </search>
         </field>
     </record>
@@ -86,6 +85,5 @@
             </graph>
         </field>
     </record>
-
 
 </odoo>

@@ -14,6 +14,7 @@
                                 <th>Code</th>
                                 <th>Pharmacy</th>
                                 <th>Medicine</th>
+                                <th>Price</th>
                                 <th>Book Date</th>
                                 <th>State</th>
                             </tr>
@@ -23,6 +24,7 @@
                                 <td><t t-esc="record.code or ''"/></td>
                                 <td><t t-esc="record.pharmacie.name or ''"/></td>
                                 <td><t t-esc="record.medicament.name or ''"/></td>
+                                <td><t t-esc="record.medicament.price or ''"/> DH</td>
                                 <td><t t-esc="record.commandeBookDate or ''"/></td>
                                 <td><t t-esc="record.commandeState or ''"/></td>
                             </tr>
@@ -38,6 +40,9 @@
                     </div>
                     <div class="summary-item">
                         <p>Total Paid Medicines: <span><t t-esc="len(docs.filtered(lambda r: r.commandeState == 'payed'))"/></span></p>
+                    </div>
+                     <div class="summary-item">
+                        <p>Total Price of Paid Medicines: <span><t t-esc="sum(docs.filtered(lambda r: r.commandeState == 'payed').mapped('medicament.price'))"/></span> DH</p>
                     </div>
                 </div>
             </div>

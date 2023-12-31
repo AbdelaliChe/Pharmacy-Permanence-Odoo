@@ -27,7 +27,7 @@
                 </header>
                 <group>
                     <field name="code"/>
-                    <field name="stock_id"/>
+                    <field name="stock_id" domain="[('pharmacie_id.owner_id', '=', uid)]"/>
                     <field name="commandeBookDate"/>
                 </group>
             </form>
@@ -81,6 +81,7 @@
                 <filter string="Booked" name="commandeState" domain="[('commandeState', '=', 'booked')]"/>
                 <filter string="Canceled" name="commandeState" domain="[('commandeState', '=', 'canceled')]"/>
                 <filter string="Payed" name="commandeState" domain="[('commandeState', '=', 'payed')]"/>
+               <filter string="Today" name="commandeBookDate" domain="[('commandeBookDate', '>=', (context_today().strftime('%Y-%m-%d 00:00:00'))), ('commandeBookDate', '&lt;=', (context_today().strftime('%Y-%m-%d 23:59:59')))]"/>
             </search>
         </field>
     </record>
