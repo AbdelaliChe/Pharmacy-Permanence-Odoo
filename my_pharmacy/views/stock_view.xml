@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-
     <record id='stock_action_form' model='ir.actions.act_window'>
         <field name="name">Stock</field>
         <field name="res_model">pharmacy.stock</field>
         <field name="view_mode">tree,form,graph,kanban,search</field>
         <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
     
+    </record>
+    <record id='stock_action_form' model='ir.actions.act_window'>
+        <field name="name">Stock</field>
+        <field name="res_model">pharmacy.stock</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('pharmacie_id.owner_id', '=', uid)]</field>
     </record>
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu"/>
