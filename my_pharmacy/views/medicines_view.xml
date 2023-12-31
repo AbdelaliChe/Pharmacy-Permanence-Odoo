@@ -3,7 +3,7 @@
     <record id='pharmacy_medicine_action_form' model='ir.actions.act_window'>
         <field name="name">Pharmacy Medicine</field>
         <field name="res_model">pharmacy.medicine</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban,search,graph</field>
     </record>
 
     <menuitem name="Pharmacy" id="pharmacy_main_menu" />
@@ -47,5 +47,45 @@
             </tree>
         </field>
     </record>
+
+    <record id="pharmacy_medicine_search_view" model="ir.ui.view">
+        <field name="name">pharmacy.medicine.search</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="Pharmacies"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="pharmacy_medicine_kanban_view" model="ir.ui.view">
+        <field name="name">pharmacy.medicine.kanban</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_content">
+                            <field name="name"/>
+                            <field name="price"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="pharmacy_medicine_graph_view" model="ir.ui.view">
+        <field name="name">pharmacy.medicine.graph</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="price" string="Medicine Price" type="measure"/>
+                <field name="dosage" string="Dosage" type="row"/>
+            </graph>
+        </field>
+    </record>
+
 
 </odoo>
