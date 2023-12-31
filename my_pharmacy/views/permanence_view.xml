@@ -73,8 +73,13 @@
                             </div>
                             <div class="o_kanban_secondary">
                                 <field name="city"/>
+                                
+                            </div>
+                            <div >
+
                                 <field name="garde_status"/>
                             </div>
+
                         </div>
                     </t>
                 </templates>
