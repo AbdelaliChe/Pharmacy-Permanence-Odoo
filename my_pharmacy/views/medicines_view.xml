@@ -65,10 +65,15 @@
             <kanban>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_content">
-                            <field name="name"/>
-                            <field name="price"/>
+                    <div>
+                        <div class="o_kanban_primary">
+                            <div>Name: <field name="name"/></div>
                         </div>
+                        <div class="o_kanban_secondary">
+                        <div>Price: <field name="price"/></div>
+                           
+                        </div>
+                    </div>
                     </t>
                 </templates>
             </kanban>

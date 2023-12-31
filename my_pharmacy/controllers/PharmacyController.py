@@ -97,7 +97,7 @@ class PharmacyController(http.Controller):
             'code' : bookingNbr,
             'stock_id': stock_record.id,
             'commandeBookDate': fields.Datetime.now(),
-            'schedule_cancel_date': fields.Datetime.now() + timedelta(minutes=5),
+            'schedule_cancel_date': fields.Datetime.now() + timedelta(minutes=30),
         }
 
         new_commande = request.env['pharmacy.commande'].create(commande_data)
